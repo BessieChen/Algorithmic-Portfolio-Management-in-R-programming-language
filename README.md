@@ -26,6 +26,11 @@ Perform a rolling portfolio optimization over annual intervals, calculate optimi
 
 
 ### Case four:
+Calculate efficient portfolios with the lowest variance given a fixed target return.
+
+Plot the efficient frontier and the capital market lines for different values of the fixed target return.
+
+
 
 
 <img width="954" alt="interactive_plot beixi chen" src="https://user-images.githubusercontent.com/33269462/44305772-627dfa80-a34e-11e8-9398-d95ac9d385fc.png">

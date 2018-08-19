@@ -11,8 +11,11 @@ Plot the cumulative maximum of the adjusted close prices from utils::env_etf$VTI
 
 #### Case two:
 Plot the sub_portfolios from worst to best (based on final price) using a color ramp from red to blue.
+![sp500_sub_portfolios](https://user-images.githubusercontent.com/33269462/44305911-0d43e800-a352-11e8-9a95-37cb9c39443f.png)
 
-#### In the 3rd class:
+
+#### Case three:
+Perform a rolling portfolio optimization over annual intervals, calculate optimized portfolio weights in each year, and apply them to out-of-sample returns in the following year, at the end, plot the cumulative returns of this max sharpe portfolio strategy.
 
 #### In the 4th class:
 

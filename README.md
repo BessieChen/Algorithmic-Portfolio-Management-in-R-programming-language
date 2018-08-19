@@ -30,7 +30,11 @@ Calculate efficient portfolios with the lowest variance given a fixed target ret
 
 Plot the efficient frontier and the capital market lines for different values of the fixed target return.
 
+![eff_front_tangent](https://user-images.githubusercontent.com/33269462/44305972-09649580-a353-11e8-991e-6390eda7384c.png)
 
 
+
+### Case five:
+Also using shiny package in R to create interactive plot.
 
 <img width="954" alt="interactive_plot beixi chen" src="https://user-images.githubusercontent.com/33269462/44305772-627dfa80-a34e-11e8-9398-d95ac9d385fc.png">

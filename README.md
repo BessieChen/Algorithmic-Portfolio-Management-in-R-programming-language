@@ -5,9 +5,12 @@ The course, authored by Prof. Jerzy in NYU, applies the R programming language t
 
 #### Case one:
 Plot the cumulative maximum of the adjusted close prices from utils::env_etf$VTI:
+![drawdown_plot](https://user-images.githubusercontent.com/33269462/44305868-5b0c2080-a351-11e8-9473-5482ff133bd6.png)
 
+![drawdown_vti](https://user-images.githubusercontent.com/33269462/44305874-6cedc380-a351-11e8-841d-581675b926ff.png)
 
-#### In the 2nd class:
+#### Case two:
+Plot the sub_portfolios from worst to best (based on final price) using a color ramp from red to blue.
 
 #### In the 3rd class:
 

@@ -1,0 +1,97 @@
+---
+title: Interactive Plots in R
+date:   2016-07-05 12:00:00
+layout: post
+categories: R plots
+output: html_document
+---
+
+### Publishing *R Markdown* documents containing interactive plots
+
+One of the advantages of writing *R Markdown* documents is that they can be compiled into *HTML* documents, which can incorporate interactive plots.  This post is an *R Markdown* document that was compiled into an *HTML* document, and can be found in algoquant's *GitHub* repository here: <a href="https://github.com/algoquant/algoquant.github.io/blob/master/_drafts/2016-07-05-Interactive-Plots-in-R.Rmd" title="R interactive plots" target="_blank"> R interactive plots </a>
+
+Before creating interactive plots, we need to install the package *rutils* from *GitHub*:  
+```{r eval=FALSE}
+# install.packages("devtools")
+devtools::install_github(repo="algoquant/rutils")
+library(rutils)
+```
+
+The *rutils* package contains a dataset of daily *OHLC* time series in *xts* format, for a portfolio of stock symbols.  The time series are contained in an environment called *env_etf*.  The data is set up for lazy loading, so it doesn't require calling `data(etf_data)` to load it before being able to call it.  
+
+Now we can create interactive plots using the time series data from package *rutils*.  Below is an example of an interactive time series plot produced using the *dygraphs* package.  Left-click on the plot and drag your mouse, to select a date range, then double-click to return to the original range.
+
+```{r eval=TRUE, fig.width=7, fig.height=4}
+# load rutils which contains env_etf dataset
+suppressMessages(suppressWarnings(library(rutils)))
+suppressMessages(suppressWarnings(library(dygraphs)))
+x_ts <- env_etf$price_s[, c("VTI", "IEF")]
+# plot dygraph with date range selector
+dygraph(x_ts, main="VTI and IEF prices") %>%
+  dyOptions(colors=c("blue","green")) %>%
+  dyRangeSelector()
+```
+
+<br>
+The *dygraphs* package in *R* is an interface to the *dygraphs JavaScript* charting library.  Interactive *dygraphs* plots require running *JavaScript* code, which can be embedded in *HTML* documents, and displayed by web browsers.
+But *pdf* documents can't run *JavaScript* code, so they can't display interactive dygraph() plots,
+
+
+### Publishing *R Markdown* documents with *plotly* interactive plots
+
+Below is an example of an interactive time series plot produced using the *plotly* package.  Left-click on the plot and drag your mouse, to select a date range, then double-click to return to the original range.
+
+```{r eval=TRUE, fig.width=7, fig.height=4}
+# load rutils which contains env_etf dataset
+suppressMessages(suppressWarnings(library(rutils)))
+suppressMessages(suppressWarnings(library(plotly)))
+# create data frame of time series
+data_frame <-
+  data.frame(dates=index(env_etf$price_s),
+    coredata(env_etf$price_s[, c("VTI", "IEF")]))
+# plotly syntax using pipes
+data_frame %>% 
+  plot_ly(x=dates, y=VTI, fill="tozeroy", name="VTI") %>% 
+  add_trace(x=dates, y=IEF, fill="tonexty", name="IEF") %>% 
+  layout(title="VTI and IEF prices", 
+         xaxis=list(title="Time"),
+         yaxis=list(title="Stock Prices"),
+         legend=list(x=0.1, y=0.9))
+# standard plotly syntax - for reference
+# p_lot <- plot_ly(data=data_frame, x=dates, y=VTI, fill="tozeroy", name="VTI")
+# p_lot <- add_trace(p=p_lot, x=dates, y=IEF, fill="tonexty", name="IEF")
+# p_lot <-   layout(title="VTI and IEF prices", xaxis=list(title="Time"), yaxis=list(title="Stock Prices"), legend=list(x=0.1, y=0.9))
+# p_lot
+```
+
+
+### Resources for creating interactive plots in *R*
+
+Links to resources for the *R* package *dygraphs*: 
+
+- <a href="http://dygraphs.com/" target="_blank"> *dygraphs* website </a>
+
+- <a href="http://dygraphs.com/gallery/" target="_blank"> *dygraphs* gallery </a>
+
+- <a href="https://github.com/dygraphs/" target="_blank"> *dygraphs* repository on *GitHub* </a>
+
+- <a href="http://rstudio.github.io/dygraphs/" target="_blank"> *R* package *dygraphs* website </a>
+
+- <a href="https://github.com/rstudio/dygraphs" target="_blank"> *R* package *dygraphs* repository on *GitHub* </a>
+
+- <a href="http://www.danvk.org/" target="_blank"> Dan Vanderkam's website, the author of the *dygraphs JavaScript* library </a>
+
+- <a href="https://github.com/danvk/" target="_blank"> Dan Vanderkam's repository on *GitHub* </a>
+
+
+Links to resources for the *R* package *plotly*: 
+
+- <a href="https://plot.ly/" target="_blank"> *plotly* website </a>
+
+- <a href="https://github.com/plotly/" target="_blank"> *plotly* project on *GitHub* </a>
+
+- <a href="https://plot.ly/r/" target="_blank"> *R* package *plotly* website </a>
+
+- <a href="http://moderndata.plot.ly/" target="_blank"> *plotly* gallery </a>
+
+- <a href="https://github.com/ropensci/plotly" target="_blank"> *plotly* repository on *GitHub* </a>

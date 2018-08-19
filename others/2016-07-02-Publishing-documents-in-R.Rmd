@@ -1,0 +1,124 @@
+---
+title: Publishing documents in R
+date:   2016-07-02 12:00:00
+layout: post
+categories: R, markdown
+output: html_document
+---
+
+### *R* document publishing for reproducible research
+
+An *R* document is a file containing: 
+
+- plain text combined with markup code, 
+- formulas, 
+- and *R* code chunks.  
+
+Publishing an *R* document means compiling it into an easily readable *pdf* or *HTML* file, together with tables and plots produced from executing the *R* code chunks.  The output document should be produced without having to copy and paste objects from different sources.
+
+Compiling *R* documents into readable documents is part of a *reproducible research* framework, because it allows for easily reproducing the published documents from its source *R* file, together with tables and plots produced from executing the *R* code chunks embedded in the source.  
+
+Over the years, two different frameworks for publishing documents have emerged:
+
++ The first is the older *PostScript* framework, created by Adobe Systems for desktop publishing and printing.  In the *PostScript* framework documents are published as *pdf* files, and they can't be interactive. 
+
++ The second is the newer *HTML* framework, created for web publishing. In the *HTML* framework documents are published as *HTML* files, and they can be interactive. 
+
+The publishing of *R* documents has followed the same pattern, and there are now two different frameworks for publishing *R* documents: 
+
++ The first is the older *Sweave* framework for producing *pdf* files, 
+
++ The second is the newer *R Markdown* framework for producing *HTML* and *pdf* files. 
+
+There are consequently two types of *R* documents: *Sweave* files and *R Markdown* files.
+
+
+### Publishing *R* documents using the *Sweave* framework
+
+A *Sweave* document is a file (usually with extension *Rnw*) containing: 
+
+- plain text combined with *LaTeX* markup code, 
+- formulas written in *LaTeX*, 
+- and *R* code chunks.  
+
+Publishing a *Sweave* document means compiling it into a *pdf* file, together with tables and plots produced from executing the *R* code chunks.  
+
+*Sweave* documents can be compiled into *pdf* documents using the *knitr* package.  The *knitr* function `knit2pdf()` compiles an *Rnw* file into a *pdf* file, for example:  
+`knitr::knit2pdf("statistics.Rnw")`  
+*Sweave* documents can't be compiled into *HTML* format, so they can't incorporate interactive plots.
+
+Many examples of *Sweave* documents can be found in algoquant's *GitHub* repository of lecture slides: <a href="https://github.com/algoquant/lecture_slides" title="algoquant's lecture slides on GitHub" target="_blank"> algoquant's lecture slides on *GitHub* </a>
+
+
+### Publishing *R* documents using the *R Markdown* framework
+
+An *R Markdown* document is a file (with extension *Rmd*) containing: 
+
+- a *YAML* header, 
+- plain text combined with markdown code, 
+- formulas written in *LaTeX*, nested between either '\$' or '\$$' symbols, 
+- and *R* code chunks, nested between either single '`' or quadruple '````' backtick symbols.
+
+Publishing an *R Markdown* document means compiling it into a *pdf* or *HTML* file, together with tables and plots produced from executing the *R* code chunks.  *R Markdown* documents are compiled using the *markdown* package, and can be compiled into *HTML* documents, so they can incorporate interactive plots. The *R Markdown* framework is relatively easy to use because it relies on the simple *markdown* markup language, which is close to plain text and is therefore easy to read. 
+
+The function `render()` from package *rmarkdown* compiles an *Rmd* file into either a *pdf* or *HTML* file:  
+
+`rmarkdown::render("R-publishing.Rmd")`
+
+The type of file produced by `render()` depends on the *YAML* header in the *Rmd* file.  If the *YAML* header includes:  
+`output: pdf_document` then a *pdf* document is produced.  
+If the *YAML* header includes:  
+`output: html_document`then a *HTML* document is produced.  
+
+This post is an *R Markdown* document that was compiled into an *HTML* document, and can be found in algoquant's *GitHub* repository here: <a href="https://github.com/algoquant/algoquant.github.io/tree/master/_drafts/2016-06-25-R-publishing.Rmd" title="R publishing" target="_blank"> R publishing </a>
+
+
+### Resources for publishing *R* documents
+
+Links to books, blogs, and tutorials about publishing *R documents* using the *knitr* package:
+
+- <a href="http://yihui.name/knitr/" target="_blank"> *knitr* package </a>
+
+- <a href="https://cran.r-project.org/web/packages/knitr/" target="_blank"> *knitr* package on *CRAN* </a>
+
+- <a href="https://github.com/yihui/knitr" target="_blank"> *knitr* repository on *GitHub* </a>
+
+- <a href="https://github.com/yihui/knitr/blob/master/FAQ.md" target="_blank"> *knitr* FAQ </a>
+
+- <a href="http://kbroman.org/knitr_knutshell/pages/Rmarkdown.html" target="_blank"> *knitr* introduction </a>
+
+- <a href="http://yihui.name/knitr/demo/showcase/" target="_blank"> *knitr* showcase </a>
+
+- <a href="http://yihui.name/knitr/demos/" target="_blank"> *knitr* demos </a>
+
+- <a href="https://support.rstudio.com/hc/en-us/articles/200552056-Using-Sweave-and-knitr" target="_blank"> compiling *Sweave* using *knitr* </a>
+
+<br>
+
+Links to books, blogs, and tutorials about publishing *R documents* using the *rmarkdown* package:
+
+- <a href="https://rpubs.com/moviedo/Rmd_tutorial" target="_blank"> rmarkdown tutorial </a>
+
+- <a href="http://rmarkdown.rstudio.com/" target="_blank"> *rmarkdown* package website </a>
+
+- <a href="https://rpubs.com/" target="_blank"> publishing on web using *R Markdown* </a>
+
+- <a href="https://rud.is/b/2016/02/04/alternate-r-markdown-templates/" target="_blank"> simple *R Markdown* document templates </a>
+
+- <a href="https://github.com/hrbrmstr/markdowntemplates" target="_blank"> simple *R Markdown* templates repository on *GitHub* </a>
+
+- <a href="http://svmiller.com/blog/2016/02/svm-r-markdown-manuscript/" target="_blank"> *R Markdown* document template for academic manuscripts </a>
+
+- <a href="https://rpubs.com/marschmi/105639" target="_blank"> Marian Schmidt tutorial: Reproducible Research Using RStudio, RMarkdown, and Git </a>
+
+<br>
+
+Links to books, blogs, and tutorials about publishing *R documents* and *reproducible research*:
+
+- <a href="http://kbroman.org/Tools4RR/" target="_blank"> Karl Broman course Reproducible Research </a>
+
+- <a href="https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf" target="_blank"> Christopher Gandrud book on Reproducible Research Using R and RStudio </a>
+
+- <a href="https://github.com/christophergandrud/Rep-Res-Book" target="_blank"> Christopher Gandrud book repository on *GitHub* </a>
+
+- <a href="https://cran.r-project.org/web/views/ReproducibleResearch.html" target="_blank"> CRAN Task View for Reproducible Research </a>

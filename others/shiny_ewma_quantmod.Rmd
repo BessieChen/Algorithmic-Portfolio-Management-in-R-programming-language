@@ -1,0 +1,54 @@
+---
+title: "EWMA prices"
+author_no_print: "Jerzy Pawlowski"
+affiliation: NYU Tandon School of Engineering
+date_no_print: '`r format(Sys.time(), "%m/%d/%Y")`'
+email: jp3900@nyu.edu
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+library(HighFreq)  # load package HighFreq
+# select OHLC data
+oh_lc <- rutils::env_etf$VTI["/2011"]
+# calculate close prices
+cl_ose <- Cl(oh_lc)
+# define lookback window and decay parameter
+win_dow <- 51
+plot_theme <- chart_theme()
+plot_theme$col$line.col <- c("orange", "blue")
+
+# source("C:/Develop/R/scripts/ewma_model.R")
+```
+
+```{r ewma_model, echo=FALSE}
+inputPanel(
+  sliderInput("lamb_da", label="lambda:",
+              min=0.01, max=0.2, value=0.1, step=0.01)
+)  # end inputPanel
+
+renderPlot({
+  
+  lamb_da <- input$lamb_da
+  
+  # calculate EWMA prices
+  weight_s <- exp(-lamb_da*1:win_dow)
+  weight_s <- weight_s/sum(weight_s)
+  ew_ma <- filter(cl_ose, filter=weight_s, sides=1)
+  ew_ma[1:(win_dow-1)] <- ew_ma[win_dow]
+  ew_ma <- xts(cbind(cl_ose, ew_ma),
+               order.by=index(oh_lc))
+  colnames(ew_ma) <- c("VTI", "VTI EWMA")
+  
+  # plot EWMA prices
+  # x11(width=12, height=9)
+  ch_ob <- chart_Series(ew_ma, theme=plot_theme, name="EWMA prices")
+  plot(ch_ob)
+  legend("top", legend=colnames(ew_ma), 
+         inset=0.1, bg="white", lty=c(1, 1), lwd=c(2, 2), 
+         col=plot_theme$col$line.col, bty="n")
+
+})  # end renderPlot
+```
